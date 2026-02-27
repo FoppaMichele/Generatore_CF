@@ -35,6 +35,35 @@ def calcolaCodiceCognome():
 
 #COLONNA B -> Foppa Michele
 
+def chiediNome():
+    nome = input("Inserisci il tuo nome: ")
+    if len(nome) == 0 or len(nome) < 3:
+        raise NameError
+    else:
+        rimuoviLettereAccentate(nome)
+        rimuoviSpazi(nome)
+        return nome
+def chiediSesso():
+    sesso=input('Inserisci il tuo sesso(f/m)').strip().lower()
+    if sesso!='f' and sesso!='M' and sesso!='F' and sesso!='m':
+        raise Exception
+    else:
+        return sesso.lower()
+def calcolaCodiceGiorno(data:datetime,sesso:str):
+    if sesso=='m':
+        giorno='0'+str(data.day)
+    else:
+        giorno=str(data.day+40)
+    return giorno
+def calcolaCodiceControllo():
+    nome=calcolaCodiceNome(chiediNome())
+    cognome=calcolaCodiceCognome(chiediCognome())
+    data=chiediDataNascita()
+    sesso=chiediSesso()
+    data_cf=f"{calcolaCodiceGiorno(data,sesso)}/{calcolaCodiceMese(data)}/{calcolaCodiceAnno(data)}"
+    codice_comune=calcolaCodiceComune(chiediComune())
+    print(data_cf)
+
 #COLONNA C -> Carrara Alessandro
 
 def rimuoviLettereAccentate(Parola: str):
@@ -125,3 +154,7 @@ def rimuoviSpazi (Parola: str):
 
 #MAIN
 #Da fare alla fine 
+data=chiediDataNascita()
+sesso=chiediSesso()
+data_cf=f"{calcolaCodiceGiorno(data,sesso)}/{calcolaCodiceMese(data)}/{calcolaCodiceAnno(data)}"
+print(data_cf)
