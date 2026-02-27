@@ -3,6 +3,75 @@ from datetime import datetime
 
 #COLONNA A -> Damian Alex
 
+from datetime import datetime
+from datetime import date
+
+def chiediAnno():
+    annoCorrente = int(date.today().year)
+    anno = int(input("Inserisci il tuo anno di nascita: ").strip())
+    if anno> annoCorrente or anno< (annoCorrente-100):
+        raise("anno sbagliato")
+    else:
+        return anno
+
+def chiediMese():
+    mese = int(input("Inserisci il tuo mese di nascita: ").strip())
+    if mese > 13 or mese < 0:
+        raise("Mese sbagliato")
+    else:
+        return mese
+
+def chiediGiorno(mese, anno):
+    giorno = int(input("Inserisci il tuo giorno di nascita: ").strip())
+    if mese == 2:
+        if (anno%4)==0:
+            if giorno > 29:
+                raise ("errore")
+            else:
+                return giorno
+        else:
+            if giorno > 28:
+                raise ("Errrore")
+            else:
+                return giorno
+    if mese in [11,4,6,9]:
+        if giorno > 30:
+            raise ("Errore")
+        else:
+            return giorno
+    else:
+        if giorno > 31:
+            raise ("Errore")
+        else:
+            return giorno
+
+def chiediCognome():
+    cognome = input("Inserisci il tuo cognome: ")
+    if len(cognome) == 0 or len(cognome) < 3:
+        raise NameError
+    else:
+        #rimuoviLettereAccentate(cognome)
+        #rimuoviSpazi(cognome)
+        return cognome
+
+def chiediDataNascita():
+    errore = True
+    while errore:
+        try:
+            print(chiediGiorno(chiediAnno(),chiediMese()))
+            errore = False
+        except:
+            print("Dati errati")
+            
+def calcolaCodiceComune():
+    pass
+
+def calcolaCodiceAnno():
+    pass
+
+def calcolaCodiceCognome():
+    pass
+
 #COLONNA B -> Foppa Michele
 
 #COLONNA C -> Carrara Alessandro
