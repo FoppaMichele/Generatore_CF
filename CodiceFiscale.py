@@ -97,7 +97,6 @@ def calcoloCIN(cf:str):
     21: 'V', 22: 'W', 23: 'X', 24: 'Y', 25: 'Z'
     }
     tot=0
-    
     for i in range(len(cf)):
         if (i+1)%2==0:
             tot+=pari[cf[i]]    
@@ -107,6 +106,8 @@ def calcoloCIN(cf:str):
     print(Cin)
     return resto[Cin]
 
+def genera_CF(Cnome,Ccognome,Cdata,Ccomune,Cin):
+    return Cnome+Ccognome+Cdata+Ccomune+Cin
 #COLONNA C -> Carrara Alessandro
 
 def rimuoviLettereAccentate(Parola: str):
