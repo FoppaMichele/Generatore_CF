@@ -31,7 +31,26 @@ def calcolaCodiceAnno():
     pass
 
 def calcolaCodiceCognome():
-    pass
+    cons = []
+    voc = []
+    for let in cognome:
+        if let not in ["a","e","i","o","u","A","E","I","O","U"]:
+            cons.append(let)
+        else:
+            voc.append(let)
+    if len(cons) + len(voc) > 3:
+        if len(cons) == 3:
+            consonanti = cons[0] + cons[1] + cons[2]
+            return consonanti
+        elif len(cons) == 2:
+            consonanti = cons[0] + cons[1] + voc[0]
+            return consonanti
+        elif len(cons) == 1:
+            consonanti = cons[0] + voc[0] + voc[1]
+            return consonanti
+    else:
+        codiceminoredi3 = cons[0] + voc[0] + "X"
+        return codiceminoredi3
 
 #COLONNA B -> Foppa Michele
 
