@@ -1,20 +1,20 @@
 import requests
 from datetime import datetime
 from datetime import date
- 
+
 #COLONNA A -> Damian Alex
- 
-def chiediDataNascita():
-    print("SEPARA LE INFORMAZIONI TRAMITE '/' (es: 30/09/2009)")
+
+def chiediDataNascita ():
+    print ("SEPARA LE INFORMAZIONI TRAMITE '/' (es: 30/09/2009)")
     valido = False
     while not valido:
         try:
-            data = input("Inserisci la data di nascita: (gg/mm/yyyy): ")
+            data = input ("Inserisci la data di nascita: (gg/mm/yyyy): ")
             data = datetime.strptime(data, "%d/%m/%Y")
             if data.day == 29 and data.month == 2:
                 if not data.year % 4 == 0:
                     raise
-            oggi = data.today()
+            oggi = data.today ()
             if data.day <= 31 and data.month <= 12 and data.year <= oggi.year:
                 return data
             else:
@@ -24,23 +24,23 @@ def chiediDataNascita():
 
 def chiediCognome():
     cognome = input("Inserisci il tuo cognome: ")
-    if len(cognome) == 0 or len(cognome) < 2:
+    if len(cognome) == 0 or len(cognome) < 3:
         raise NameError
     else:
         rimuoviLettereAccentate(cognome)
         rimuoviSpazi(cognome)
-        return cognome.upper()
-           
+        return cognome
+            
 def calcolaCodiceComune(comune: str):
-    cod_comune = requests.get(f"https://api.tcdev.xyz/comune/{comune}")
+    cod_comune = requests.get (f"https://api.tcdev.xyz/comune/{comune}")
     cod_comune = cod_comune.json()
     return cod_comune ["codiceCatastale"]
- 
+
 def calcolaCodiceAnno(anno: str, mese: str, giorno:str):
     cod = anno[2] + anno [3] + mese + giorno
     return cod
- 
-def calcolaCodiceCognome(cognome):
+
+def calcolaCodiceCognome(cognome: str):
     cons = []
     voc = []
     for let in cognome:
@@ -61,9 +61,9 @@ def calcolaCodiceCognome(cognome):
     else:
         codiceminoredi3 = cons[0] + voc[0] + "X"
         return codiceminoredi3
-    
+
 #COLONNA B -> Foppa Michele
- 
+
 def chiediNome():
     nome = input("Inserisci il tuo nome: ")
     if len(nome) == 0 or len(nome) < 3:
@@ -72,19 +72,21 @@ def chiediNome():
         rimuoviLettereAccentate(nome)
         rimuoviSpazi(nome)
         return nome
+
 def chiediSesso():
     sesso=input('Inserisci il tuo sesso(f/m)').strip().lower()
     if sesso!='f' and sesso!='M' and sesso!='F' and sesso!='m':
         raise Exception
     else:
         return sesso.lower()
+
 def calcolaCodiceGiorno(data:datetime,sesso:str):
     if sesso=='m':
         giorno='0'+str(data.day)
     else:
         giorno=str(data.day+40)
     return giorno
- 
+
 def calcoloCIN(cf:str):
     dispari = {
     '0': 1, '1': 0, '2': 5, '3': 7, '4': 9, '5': 13, '6': 15, '7': 17, '8': 19,
@@ -92,14 +94,14 @@ def calcoloCIN(cf:str):
     'I': 19, 'J': 21, 'K': 2, 'L': 4, 'M': 18, 'N': 20, 'O': 11, 'P': 3, 'Q': 17,
     'R': 8, 'S': 12, 'T': 14, 'U': 16, 'V': 10, 'W': 22, 'X': 25, 'Y': 24, 'Z': 23
     }
- 
+
     pari = {
     '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
     '9': 9, 'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7,
     'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16,
     'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25
     }
- 
+
     resto= {
     0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G',
     7: 'H', 8: 'I', 9: 'J', 10: 'K', 11: 'L', 12: 'M', 13: 'N',
@@ -107,36 +109,36 @@ def calcoloCIN(cf:str):
     21: 'V', 22: 'W', 23: 'X', 24: 'Y', 25: 'Z'
     }
     tot=0
-   
     for i in range(len(cf)):
         if (i+1)%2==0:
-            tot+=pari[cf[i]]    
+            tot+=pari[cf[i].upper()]  
         else:
-            tot+=dispari[cf[i]]            
+            tot+=dispari[cf[i].upper()]             
     Cin=tot%26
-    print(Cin)
     return resto[Cin]
- 
+
+def genera_CF(Cnome,Ccognome,Cdata,Ccomune,Cin):
+    return Ccognome+Cnome+Cdata+Ccomune+Cin
+
 #COLONNA C -> Carrara Alessandro
- 
+
 def rimuoviLettereAccentate(Parola: str):
     return Parola.lower().replace ("à", "a").replace("ò", "o").replace ("è", "e").replace("é", "e").replace ("ì", "i").replace ("ù", "u")
- 
+
 def chiediComune ():
     comune_valido = False
     while not comune_valido:
-        comune = input ("Inserisci il comnune: ").strip().title()
-        com_dati = requests.get ("https://comuni-ita.nicolorebaioli.dev/comuni")
-        com_dati = com_dati.json()
-        trovato = False
-        for c in com_dati:
-            if c ["nome"] == comune:
-                trovato = True
-        if trovato:
-            return comune
-        else:
-            print ("Comune non trovato! riprovare")
- 
+        try:
+            comune = input ("Inserisci il comnune: ").strip().title()
+            comuni = requests.get (f"https://api.tcdev.xyz/comune/{comune}")
+            comuni = comuni.json()
+            if comuni["codiceCatastale"] == "null":
+                raise
+            else:
+                return comune
+        except:
+            print ("Comune inserito non valido!")
+
 def calcolaCodiceMese (data: datetime):
     cod_mese = None
     mese = data.month
@@ -165,7 +167,7 @@ def calcolaCodiceMese (data: datetime):
     elif mese == 12:
         cod_mese = "T"
     return cod_mese
- 
+
 def calcolaCodiceNome (nome: str):
     cons = []
     voc = []
@@ -201,9 +203,23 @@ def calcolaCodiceNome (nome: str):
         elif len(voc) == 0:
             cod_nome += "xxx"
     return cod_nome.upper()
- 
+
 def rimuoviSpazi (Parola: str):
     return Parola.replace (" ", "")
- 
+
 #MAIN
-#Da fare alla fine
+while True:
+    cog = chiediCognome ()
+    cod_cog = calcolaCodiceCognome (cog)
+    nome = chiediNome()
+    cod_nome = calcolaCodiceNome (nome)
+    data = chiediDataNascita ()
+    s = chiediSesso()
+    giorno = calcolaCodiceGiorno (data, s)
+    mese = calcolaCodiceMese (data)
+    cod_nascita = calcolaCodiceAnno (str(data.year), mese, giorno)
+    com = chiediComune ()
+    cod_com = calcolaCodiceComune (com)
+    cin = calcoloCIN (cod_cog + cod_nome + cod_nascita + cod_com)
+    cf = genera_CF (cod_nome, cod_cog, cod_nascita, cod_com, cin)
+    print (f"Il tuo codice fiscale è: {cf.upper()}")
