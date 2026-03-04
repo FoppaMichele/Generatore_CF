@@ -208,7 +208,9 @@ def rimuoviSpazi (Parola: str):
     return Parola.replace (" ", "")
 
 #MAIN
-while True:
+run=True
+err_choice=True
+while run==True:
     cog = chiediCognome ()
     cod_cog = calcolaCodiceCognome (cog)
     nome = chiediNome()
@@ -224,3 +226,14 @@ while True:
     cf = genera_CF (cod_nome, cod_cog, cod_nascita, cod_com, cin)
 
     print (f"Il tuo codice fiscale è: {cf.upper()}")
+    while err_choice:
+        choice=input('Vuoi calcolare un altro codice?(y/n)').strip().lower()
+        if choice!='y' and choice!='n':
+            print('Scelta inserita non valida')
+        elif choice=='n':
+            run=False
+            err_choice=False
+        else:
+            err_choice=False
+            
+
