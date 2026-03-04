@@ -90,7 +90,7 @@ def calcolaCodiceGiorno(data:datetime,sesso:str):
 def calcoloCIN(cf:str):
     dispari = {
     '0': 1, '1': 0, '2': 5, '3': 7, '4': 9, '5': 13, '6': 15, '7': 17, '8': 19,
-    '9': 21, 'A': 1, 'B': 0, 'C': 5, 'D': 9, 'E': 13, 'F': 13, 'G': 15, 'H': 17,
+    '9': 21, 'A': 1, 'B': 0, 'C': 5, 'D': 7, 'E': 13, 'F': 13, 'G': 15, 'H': 17,
     'I': 19, 'J': 21, 'K': 2, 'L': 4, 'M': 18, 'N': 20, 'O': 11, 'P': 3, 'Q': 17,
     'R': 8, 'S': 12, 'T': 14, 'U': 16, 'V': 10, 'W': 22, 'X': 25, 'Y': 24, 'Z': 23
     }
@@ -222,4 +222,5 @@ while True:
     cod_com = calcolaCodiceComune (com)
     cin = calcoloCIN (cod_cog + cod_nome + cod_nascita + cod_com)
     cf = genera_CF (cod_nome, cod_cog, cod_nascita, cod_com, cin)
+
     print (f"Il tuo codice fiscale è: {cf.upper()}")
